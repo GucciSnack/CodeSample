@@ -1,0 +1,16 @@
+{
+  "name": "jessealonzo/crimson_agility_coding_test",
+  "description": "Crimson Agility coding test.",
+  "require": {
+    "php": "^8.0",
+    "vlucas/phpdotenv": "^5.2",
+    "twig/twig": "^3.2",
+    "twig/intl-extra": "^3.3",
+    "league/route": "^4.5",
+    "laminas/laminas-diactoros": "2.8.*",
+    "laminas/laminas-httphandlerrunner": "2.1.*"
+  },
+  "require-dev": {
+    "symfony/var-dumper": "^5.2"
+  }
+}

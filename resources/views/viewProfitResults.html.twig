@@ -1,0 +1,63 @@
+{% extends 'layouts/default.html.twig' %}
+{% block content %}
+    <h1>
+        View Profits: {{ file }}
+    </h1>
+
+    <div>
+        <table class="table table-dark">
+            <thead>
+                <tr>
+                    <th scope="col">SKU</th>
+                    <th scope="col">Cost</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">QTY</th>
+                    <th scope="col">Net Profit Margin</th>
+                    <th scope="col">Total Profits (USD)</th>
+                    <th scope="col">Total Profits ({{ conversionCurrencyCode }})</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for profitResult in profitResults %}
+                    <tr>
+                        <td>{{ profitResult.sku }}</td>
+                        <td>{{ profitResult.cost|format_currency('USD') }}</td>
+                        <td>{{ profitResult.price|format_currency('USD') }}</td>
+                        <td class="{% if (profitResult.quantity > 0) %} text-success {% else %} text-danger {% endif %}">{{ profitResult.quantity }}</td>
+                        <td class="{% if (profitResult.getProfitMargin() > 0) %} text-success {% else %} text-danger {% endif %}">{{ profitResult.getProfitMargin()|format_percent_number({rounding_mode: 'floor', fraction_digit: 2}) }}</td>
+                        {% if (profitResult.getProfit() > 0) %}
+                            <td class="text-success">{{ profitResult.getProfit()|format_currency('USD') }}</td>
+                            <td class="text-success">{{ profitResult.getProfit(conversionCurrencyCode)|format_currency(conversionCurrencyCode) }}</td>
+                        {% else %}
+                            <td class="text-danger">{{ profitResult.getProfit()|format_currency('USD') }}</td>
+                            <td class="text-danger">{{ profitResult.getProfit(conversionCurrencyCode)|format_currency(conversionCurrencyCode) }}</td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+                <tr>
+                    <th scope="col"></th>
+                    <th scope="col">Avrg Cost</th>
+                    <th scope="col">Avrg Price</th>
+                    <th scope="col">Total QTY</th>
+                    <th scope="col">Avrg Net Profit Margin</th>
+                    <th scope="col">Total Profits (USD)</th>
+                    <th scope="col">Total Profits ({{ conversionCurrencyCode }})</th>
+                </tr>
+                <tr>
+                    <td class="text-uppercase text-secondary">Summary</td>
+                    <td>{{ summaryResults.averageCost|format_currency('USD') }}</td>
+                    <td>{{ summaryResults.averagePrice|format_currency('USD') }}</td>
+                    <td class="{% if (summaryResults.totalQuantity > 0) %} text-success {% else %} text-danger {% endif %}">{{ summaryResults.totalQuantity }}</td>
+                    <td class="{% if (summaryResults.averageProfitMargin > 0) %} text-success {% else %} text-danger {% endif %}">{{ summaryResults.averageProfitMargin|format_percent_number({rounding_mode: 'floor', fraction_digit: 2}) }}</td>
+                    {% if (summaryResults.getTotalProfit() > 0) %}
+                        <td class="text-success">{{ summaryResults.getTotalProfit()|format_currency('USD') }}</td>
+                        <td class="text-success">{{ summaryResults.getTotalProfit(conversionCurrencyCode)|format_currency(conversionCurrencyCode) }}</td>
+                    {% else %}
+                        <td class="text-danger">{{ summaryResults.getTotalProfit()|format_currency('USD') }}</td>
+                        <td class="text-danger">{{ summaryResults.getTotalProfit(conversionCurrencyCode)|format_currency(conversionCurrencyCode) }}</td>
+                    {% endif %}
+                </tr>
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

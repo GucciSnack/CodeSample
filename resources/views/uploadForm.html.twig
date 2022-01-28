@@ -1,0 +1,41 @@
+{% extends 'layouts/default.html.twig' %}
+{% block content %}
+    <h1>
+        Upload CSV Profits File
+    </h1>
+
+    <form action="/process-form" method="post" enctype="multipart/form-data" class="my-5">
+        {% if error is defined %}
+            <div class="alert alert-danger rounded-0">
+                {{ error }}
+            </div>
+        {% endif %}
+
+        <div class="mb-5 row">
+            <div class="col-8">
+                <div class="mb-2">
+                    <label for="profits_doc" class="form-label">Profits Document</label>
+                    <input class="form-control rounded-0" type="file" id="profits_doc" name="profits_doc" accept=".csv" />
+                </div>
+                <small class="text-secondary">
+                    Please upload a csv profits file.
+                </small>
+            </div>
+            <div class="col">
+                <div class="mb-2">
+                    <label for="profits_conversion" class="form-label">Currency Conversion</label>
+                    <select class="form-control rounded-0" type="file" id="profits_conversion" name="profits_conversion">
+                        <option value="CAD">Canadian Dollar (CAD)</option>
+                        <option value="EUR">European Euro (EUR)</option>
+                        <option value="GBP">British Pound (GBP)</option>
+                    </select>
+                </div>
+                <small class="text-secondary">
+                    Select a currency to convert from USD.
+                </small>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-outline-primary rounded-0">Upload Document</button>
+    </form>
+{% endblock %}
